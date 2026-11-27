@@ -1,0 +1,31 @@
+# python agent_memory_demo.py
+5 questions
+
+STATELESS: re-reads every document for every question
+  renewal_date   -> 2027-03-01     cost:  2182 tokens
+  payment_terms  -> net 30         cost:  2182 tokens
+  liability_cap  -> 2x annual fees cost:  2182 tokens
+  notice_period  -> 60 days        cost:  2182 tokens
+  auto_renew     -> yes            cost:  2182 tokens
+  TOTAL: 10910 tokens
+
+STATEFUL: reads once (2182 tokens), then asks memory
+  renewal_date   -> 2027-03-01  (from contract_a.txt) cost:   3 tokens
+  payment_terms  -> net 30  (from contract_b.txt) cost:   4 tokens
+  liability_cap  -> 2x annual fees  (from contract_c.txt) cost:   5 tokens
+  notice_period  -> 60 days  (from contract_a.txt) cost:   4 tokens
+  auto_renew     -> yes  (from contract_c.txt)   cost:   3 tokens
+  TOTAL: 2201 tokens
+
+Stateful used 5.0x fewer tokens on this toy task.
+
+# python agent_memory_demo.py --repeat 10
+50 questions
+
+STATELESS: re-reads every document for every question
+  TOTAL: 109100 tokens
+
+STATEFUL: reads once (2182 tokens), then asks memory
+  TOTAL: 2372 tokens
+
+Stateful used 46.0x fewer tokens on this toy task.
